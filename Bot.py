@@ -68,7 +68,7 @@ PERSIST_DIRECTORY = "data/chroma_db_streamlit"
 PERSIST_STATE_FILE = os.path.join(PERSIST_DIRECTORY, "processed_files_state.json") # os.path.join 会正确处理路径
 
 # --- 应用设置 ---
-APP_TITLE = f"使用 {MODEL_ID} 和 基于 BGE 词嵌入 的 ChromaDB 的 RAG 应用 (支持持久化与文件同步)"
+APP_TITLE = f"使用 Deepseek-R1 和 基于 BGE 词嵌入 的 ChromaDB 的 RAG 应用 (支持持久化与文件同步)"
 # --- 修改这里：使用相对于脚本的相对路径 (因为图片在根目录) ---
 FAVICON_PATH = "Bot.png"
 LOGO_PATH = "icon.png"
