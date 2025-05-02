@@ -110,7 +110,8 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   如果您修改了文件，必须在修改的文件中携带显著的声明，说明您更改了这些文件。
 *   您必须保留原始代码中包含的所有版权、专利、商标和归属声明（不包括那些不属于源代码任何部分的声明）。
 *   如果原始作品包含一个 "NOTICE" 文本文件作为其分发的一部分，则您分发的任何衍生作品必须包含该 NOTICE 文件中包含的归属声明的可读副本（不包括那些不修改衍生作品的声明）。
-*   
+*   有关完整的权限和限制信息，请参阅项目根目录下的 [`LICENSE`](./LICENSE) 文件。
+  
 ## 即时体验
 * 欢迎访问该链接进行 RAG Bot 体验！详情访问：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
 *  ![Alt text](https://github.com/Erikline/Dynamic-Bot-Powered-by-RAG-Techniques/blob/main/Streamlit%20Web.png)
