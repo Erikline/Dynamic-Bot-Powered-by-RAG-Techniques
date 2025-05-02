@@ -8,9 +8,9 @@ from PIL import Image
 import logging
 import warnings
 from dotenv import load_dotenv
-import torch # <--- 导入 torch 用于设备检查
-import shutil # <--- 导入 shutil 用于目录操作
-import hashlib # <--- 导入 hashlib 用于计算文件哈希
+import torch 
+import shutil 
+import hashlib 
 
 # 加载环境变量 (确保 .env 文件存在或环境变量已设置)
 load_dotenv()
@@ -61,13 +61,12 @@ if not DASHSCOPE_API_KEY:
 MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
 
 # --- 持久化配置 ---
-PERSIST_DIRECTORY = r"D:\Desktop\程序\03-构建动态LLM-Bot模型代码\chroma_db_streamlit" # <--- ChromaDB 数据将保存到这个目录
+PERSIST_DIRECTORY = r"D:\Desktop\xxxxxx\chroma_db_streamlit" # <--- ChromaDB 数据将保存到这个目录
 PERSIST_STATE_FILE = os.path.join(PERSIST_DIRECTORY, "processed_files_state.json") # <--- 用于记录文件状态的json文件
 
 # --- 应用设置 ---
 APP_TITLE = f"使用 {MODEL_ID} 和 基于 BGE 词嵌入 的 ChromaDB 的 RAG 应用 (支持持久化与文件同步)"
-# !! 请确保下面的路径对你的环境是正确的 !!
-FAVICON_PATH = r"D:\Desktop\程序\03-构建动态LLM-Bot模型代码\Bot.png" # 请替换为你的实际路径
+FAVICON_PATH = r"D:\Desktop\xxxxxx\Bot.png" # 请替换为你的实际路径
 LOGO_PATH = r"D:\Desktop\程序\03-构建动态LLM-Bot模型代码\icon.png"   # 请替换为你的实际路径
 
 try:
@@ -410,34 +409,17 @@ msgs = StreamlitChatMessageHistory(key="rag_chat_messages_dashscope_chroma_cn_v2
 # 5. 定义 Prompt 模板 (保持不变)
 RESPONSE_TEMPLATE = """<s>[INST]
 <<SYS>>
-你的角色是一位 **竞赛智能客服** 机器人，专注于解读用户上传的 **特定竞赛规程 PDF 文档**。
-你的核心任务是：基于下方提供的、从这些 **特定文档中检索到的上下文片段**，以**清晰、结构化、高度准确**的方式回答用户关于 **这些文档内容** 的问题。
-
-指导原则：
-
-1.  **铁证如山，绝不臆断:** 你的回答必须 **严格基于且完全源自** 以下提供的上下文信息。任何超出这些特定上下文的内容，包括但不限于你自身的通用知识、其他赛事信息、网络数据或个人推断，都**绝对禁止**使用。回答中的每一句话都应能在提供的上下文中找到直接或间接的明确支撑。
-
-2.  明确信息边界，坦诚缺失：如果用户的问题涉及到 **本次竞赛的具体细节**，但所提供的文档片段中 **并未包含** 相关信息，你必须明确告知用户，无法基于现有文档回答该特定问题。例如，可以这样回答：“根据当前提供的竞赛文档信息，我暂时无法找到关于‘[用户问题关键点]’的具体说明。” 关键在于：**绝不** 能自行编造或猜测任何 **竞赛相关** 的信息。
-
-3.  **提炼关键，结构化呈现 (仅限上下文内):** 在确保严格遵守原则1和2的前提下，当你能从上下文中找到答案时，请**仔细分析并提炼核心信息点**。如果上下文包含多个相关片段，尝试将信息进行**逻辑整合与归纳**。对于复杂问题，可以考虑使用要点、列表等方式结构化地呈现答案，使其既全面又有条理，体现对 **所提供信息** 的深度理解。
-
-4.  审慎运用通用知识：只有当用户的问题 **明显** 是关于一个 **普遍性、非特定于本次竞赛** 的概念或知识（例如：“什么是自然语言处理？”、“请解释一下聊天机器人。”、“数据预处理有哪些通用建议？”），**并且** 问题内容 **不涉及** 上传的PDF文档 **特有的** 规则、安排或要求时，你 **可以** 运用你的通用知识库来提供背景信息或解释。请注意，这类回答应作为一般性知识提供，并明确（如果需要）这不代表本次竞赛的具体规定，除非文档中明确支持。
-
-5.  沟通清晰友好：请以专业、清晰、友好的方式进行回答。在确保信息准确（特别是竞赛相关信息严格依据文档）的前提下，可以采用比纯粹列举事实稍微灵活一些的语言风格，使回答更易于理解。如果基于文档的回答内容较复杂，可以使用项目符号或列表等形式，使其结构更清晰。
-
-现在，请仔细审阅下方提供的上下文信息，然后回答用户的问题。
+Your Prompt！Please use a specific prompt for getting a precise result！
 <<SYS>>
 
-从所提供的竞赛PDF文档中检索到的相关上下文信息:
+从所提供的XXX文档中检索到的相关上下文信息:
 ---
 {context}
 ---
 
-请严格遵守以上原则进行回答。
-
 用户问题: {question}
 [/INST]
-竞赛智能客服助手回答:
+XXX助手回答:
 """
 
 PROMPT = PromptTemplate(template=RESPONSE_TEMPLATE, input_variables=["context", "question"])
