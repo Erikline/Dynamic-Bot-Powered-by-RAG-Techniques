@@ -151,4 +151,6 @@ This project is an intelligent question-answering application based on the **Ret
 *   Hugging Face Transformers ([https://github.com/huggingface/transformers](https://github.com/huggingface/transformers)) & Embeddings ([https://huggingface.co/BAAI/bge-large-zh-v1.5](https://huggingface.co/BAAI/bge-large-zh-v1.5))
 *   Alibaba Cloud DashScope ([https://www.aliyun.com/product/bailian](https://www.aliyun.com/product/bailian)) & Deepseek-R1 Model
 
+## Experience
+* Welcome to the RAG Bot experience! For more details, visit: https://dynamic-bot-powered-by-rag-techniques.streamlit.app/
 ---
