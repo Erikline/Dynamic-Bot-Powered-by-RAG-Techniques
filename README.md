@@ -102,3 +102,6 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   ChromaDB ([https://github.com/chroma-core/chroma](https://github.com/chroma-core/chroma))
 *   Hugging Face Transformers ([https://github.com/huggingface/transformers](https://github.com/huggingface/transformers)) & Embeddings ([https://huggingface.co/BAAI/bge-large-zh-v1.5](https://huggingface.co/BAAI/bge-large-zh-v1.5))
 *   阿里云 DashScope ([https://www.aliyun.com/product/bailian](https://www.aliyun.com/product/bailian)) & Deepseek-R1 Model
+
+## 即时体验
+*  欢迎访问该链接进行 RAG Bot 体验！详情访问：** **
