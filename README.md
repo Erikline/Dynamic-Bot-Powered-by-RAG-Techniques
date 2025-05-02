@@ -104,4 +104,4 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   阿里云 DashScope ([https://www.aliyun.com/product/bailian](https://www.aliyun.com/product/bailian)) & Deepseek-R1 Model
 
 ## 即时体验
-*  欢迎访问该链接进行 RAG Bot 体验！详情访问：** **
+*  欢迎访问该链接进行 RAG Bot 体验！详情访问：`https://dynamic-bot-powered-by-rag-techniques.streamlit.app/`
