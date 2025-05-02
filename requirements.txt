@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-core
+chromadb
+sentence-transformers
+transformers
+streamlit
+pypdf
+Pillow
+langchain-huggingface
+langchain-openai
+python-dotenv
+torch
