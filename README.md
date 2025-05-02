@@ -1,8 +1,8 @@
-# RAG Chatbot 应用（基于 ChromaDB 持久化与文件同步）
+# 🤖 RAG Chatbot 应用（基于 ChromaDB 持久化与文件同步）
 
 这是一个基于检索增强生成 (RAG) 架构的 Streamlit Web 应用，允许用户上传 PDF 文档并与其内容进行对话。该应用集成了 ChromaDB 作为向量数据库（支持持久化），使用 Hugging Face 的 BGE 模型进行文档嵌入，并利用阿里云 DashScope 平台上的 Deepseek-R1 模型生成回答。其核心特性是能够检测上传文件的变更，并据此自动管理向量数据库的同步。
 
-## 功能特性
+## ✨ 功能特性
 
 *   **PDF 文档上传:** 通过侧边栏轻松上传一个或多个 PDF 文件。
 *   **RAG 架构:** 利用外部知识库增强大型语言模型的回答能力。
@@ -17,7 +17,7 @@
 *   **源文档追溯:** 在回答下方可选显示检索到的上下文来源及其页码。
 *   **缓存管理:** 使用 Streamlit 的 `st.cache_resource` 缓存检索器，提高效率；提供按钮清除缓存和持久化数据。
 
-## 技术栈
+## 🛠️ 技术栈
 
 *   **前端 & 应用框架:** Streamlit
 *   **核心 RAG 框架:** Langchain
@@ -28,13 +28,13 @@
 *   **文本分块:** RecursiveCharacterTextSplitter
 *   **实用工具:** python-dotenv, torch, shutil, hashlib, Pillow
 
-## 环境要求
+## ✅ 环境要求
 
 *   Python 3.9+
 *   GPU (可选，但强烈推荐用于加速 Embedding 模型)
 *   阿里云 DashScope API Key
 
-## 设置步骤
+## ⚙️ 设置步骤
 
 1.  **克隆或下载代码:**
     ```bash
@@ -73,7 +73,7 @@
 5.  **准备 PDF 文件:**
     将你想要应用处理的 PDF 文档准备好。你将在 Streamlit 界面的侧边栏上传这些文件。
 
-## 运行应用
+## ▶️ 运行应用
 
 在已激活虚拟环境的终端中，导航到脚本所在的目录，然后运行：
 
@@ -83,7 +83,7 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 
 应用将在你的浏览器中打开一个新的标签页。
 
-## 使用说明
+## 📖 使用说明
 
 1.  **上传 PDF:** 在 Streamlit 页面的侧边栏使用 "上传 PDF 文件" 按钮上传你想要处理的竞赛文档。你可以上传多个文件。
 2.  **文档处理:** 应用会自动检测你上传的文件。
@@ -95,7 +95,7 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 6.  **清除数据:** 侧边栏的 "清除所有数据缓存 (包括 ChromaDB)" 按钮会删除本地保存的 ChromaDB 数据和文件状态记录，并清除 Streamlit 缓存。使用此功能将强制应用在下次运行时重新处理所有上传的文件。
 
 
-## 致谢
+## 🙏 致谢
 
 *   Langchain ([https://github.com/langchain-ai/langchain](https://github.com/langchain-ai/langchain))
 *   Streamlit ([https://github.com/streamlit/streamlit](https://github.com/streamlit/streamlit))
@@ -111,8 +111,7 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   您必须保留原始代码中包含的所有版权、专利、商标和归属声明（不包括那些不属于源代码任何部分的声明）。
 *   如果原始作品包含一个 "NOTICE" 文本文件作为其分发的一部分，则您分发的任何衍生作品必须包含该 NOTICE 文件中包含的归属声明的可读副本（不包括那些不修改衍生作品的声明）。
 *   有关完整的权限和限制信息，请参阅项目根目录下的 [`LICENSE`](./LICENSE) 文件。
-  
-## 即时体验
-* 欢迎访问该链接进行 RAG Bot 体验！详情访问：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
-*  ![Alt text](https://github.com/Erikline/Dynamic-Bot-Powered-by-RAG-Techniques/blob/main/Streamlit%20Web.png)
 
+## ✨ 即时体验
+* 欢迎访问该链接进行 RAG Bot 体验！详情访问：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
+*  ![Alt text](https://raw.githubusercontent.com/Erikline/Dynamic-Bot-Powered-by-RAG-Techniques/main/Streamlit%20Web.png)
