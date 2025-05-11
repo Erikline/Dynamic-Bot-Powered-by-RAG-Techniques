@@ -1,4 +1,4 @@
-# 🤖 RAG Chatbot 应用（基于 ChromaDB 持久化与文件同步）
+# 🤖 RAG Chatbot 应用（ChromaDB 持久化与文件同步）
 
 这是一个基于检索增强生成 (RAG) 架构的 Streamlit Web 应用，允许用户上传 PDF 文档并与其内容进行对话。该应用集成了 ChromaDB 作为向量数据库（支持持久化），使用 Hugging Face 的 BGE 模型进行文档嵌入，并利用阿里云 DashScope 平台上的 Deepseek-R1 模型生成回答。其核心特性是能够检测上传文件的变更，并据此自动管理向量数据库的同步。
 
