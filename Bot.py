@@ -36,6 +36,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.runnables import RunnablePassthrough
 from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.chains import RetrievalQA
+
 # 导入 DashScope (OpenAI兼容模式) 所需的组件
 try:
     from langchain_openai import ChatOpenAI # <--- 使用 LangChain 的 OpenAI 包装器
@@ -425,13 +427,12 @@ qa_chain = None # 初始化
 if llm is not None and retriever is not None: # 仅在 LLM 和 Retriever 都成功时创建
     try:
         st.info("正在创建 RAG 问答链 (使用 ChromaDB 和 DashScope LLM)...")
-        combine_docs_chain = create_stuff_documents_chain(
-            llm,
-            PROMPT
-        )
-        qa_chain = create_retrieval_chain(
-            retriever,
-            combine_docs_chain
+        qa_chain = RetrievalQA.from_chain_type(
+            llm=llm,
+            chain_type='stuff',
+            retriever=retriever,
+            chain_type_kwargs={"prompt": PROMPT},
+            return_source_documents=True
         )
         st.success("RAG 问答链准备就绪。")
     except Exception as e:
@@ -560,6 +561,7 @@ about.write(f"""
 
     **注意:** 持久化数据保存在 `{PERSIST_DIRECTORY}` 目录中。请确保此目录已被添加到 `.gitignore` 文件，以避免将大量数据提交到版本控制。
 """)
+
 
 
 
