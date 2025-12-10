@@ -1,20 +1,21 @@
-langchain
-langchain-community
-langchain-core
-chromadb
-sentence-transformers
-transformers
-streamlit
-pypdf
-Pillow
-langchain-huggingface
-langchain-openai
-python-dotenv
-torch
-langchain-chroma
-langchain-text-splitters
-langchain-chroma 
-langchain-huggingface 
-langchain-openai 
-langchain-community 
-chromadb
+# --- Web 界面 ---
+streamlit>=1.35.0
+
+# --- LangChain 核心组件 (必须全部安装) ---
+# 注意：'langchain' 包包含 Chains 和 RetrievalQA，缺它就会报错
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-text-splitters>=0.3.0
+
+# --- LangChain 专用集成包 (新版标准) ---
+langchain-openai>=0.2.0       # 用于连接 DashScope/DeepSeek
+langchain-chroma>=0.1.4       # 用于 ChromaDB 向量库
+langchain-huggingface>=0.1.0  # 用于 HuggingFace Embeddings
+
+# --- 底层依赖库 ---
+chromadb>=0.5.5               # 向量数据库引擎
+pypdf>=5.0.0                  # PDF 解析
+python-dotenv>=1.0.0          # 环境变量加载
+torch>=2.0.0                  # PyTorch (用于运行 Embedding 模型)
+tiktoken>=0.7.0               # Token 计算 (OpenAI 协议通常需要)
