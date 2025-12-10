@@ -52,9 +52,6 @@ warnings.filterwarnings(
 )
 
 # --- 配置 ---
-# DashScope (百炼) API 配置
-DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
-DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 VOLC_API_KEY = os.getenv("VOLC_API_KEY")
 VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
 
@@ -99,11 +96,6 @@ except Exception as e:
 
 with st.sidebar:
     st.markdown(f"**{APP_TITLE}**")
-    
-    # 检查 API Key
-    if not DASHSCOPE_API_KEY:
-        st.error("⚠️ 未设置 DASHSCOPE_API_KEY")
-        st.info("请设置环境变量或在代码中填入 Key")
     
     st.divider()
 
@@ -368,19 +360,6 @@ if retriever is not None:
     except Exception as e:
         st.error(f"初始化 LLM 失败: {e}")
         st.stop()
-        
-    try:
-        # st.info(f"正在初始化 DashScope LLM: {MODEL_ID}...")
-        llm = ChatOpenAI(
-            model_name=MODEL_ID,
-            openai_api_key=DASHSCOPE_API_KEY,
-            openai_api_base=DASHSCOPE_API_BASE,
-            temperature=0.5,
-            max_tokens=1024,
-        )
-    except Exception as e:
-        st.error(f"初始化 LLM 失败: {e}")
-        st.stop()
 
 # 4. 初始化聊天记录 (使用 LangChain 的 Streamlit 历史记录类)
 msgs = StreamlitChatMessageHistory(key="chat_messages_history")
@@ -510,6 +489,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
