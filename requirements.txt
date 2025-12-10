@@ -17,3 +17,4 @@ pypdf>=5.0.0
 python-dotenv
 torch
 streamlit
+pysqlite3-binary
