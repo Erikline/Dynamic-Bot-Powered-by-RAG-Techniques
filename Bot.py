@@ -22,7 +22,7 @@ try:
     # 2. 核心对象
     from langchain_core.prompts import PromptTemplate
     from langchain_core.documents import Document
-    from langchain.chains import RetrievalQA
+    from langchain.chains.retrieval_qa.base import RetrievalQA
     
     # 3. 这里的导入是修复的关键：使用独立包
     # 以前是 langchain_community.vectorstores.chroma
@@ -491,3 +491,4 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
