@@ -11,3 +11,5 @@ langchain-huggingface
 langchain-openai
 python-dotenv
 torch
+langchain-chroma
+langchain-text-splitters
