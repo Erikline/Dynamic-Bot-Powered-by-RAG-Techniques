@@ -53,7 +53,7 @@ warnings.filterwarnings(
 DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
 DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
 SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
-SILICONFLOW_API_KEY = sk-gptbjpmnxghdepegyvaowaoapmmokwtsucmqtmijzumqqaqc
+SILICONFLOW_API_KEY = "sk-gptbjpmnxghdepegyvaowaoapmmokwtsucmqtmijzumqqaqc"
 
 # --- 模型配置 ---
 # MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
@@ -504,6 +504,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
