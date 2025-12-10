@@ -38,9 +38,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.documents import Document
 
 # 新版 RAG 构造
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
-
+from langchain.chains.retrieval_qa.base import RetrievalQA
 
 # 导入 DashScope (OpenAI兼容模式) 所需的组件
 try:
@@ -565,6 +563,7 @@ about.write(f"""
 
     **注意:** 持久化数据保存在 `{PERSIST_DIRECTORY}` 目录中。请确保此目录已被添加到 `.gitignore` 文件，以避免将大量数据提交到版本控制。
 """)
+
 
 
 
