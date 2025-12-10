@@ -52,9 +52,11 @@ warnings.filterwarnings(
 # DashScope (百炼) API 配置
 DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
 DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
 
 # --- 模型配置 ---
-MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
+# MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
+MODEL_ID = "Qwen/Qwen2.5-7B-Instruct" 
 
 # --- 持久化配置 ---
 PERSIST_DIRECTORY = "data/chroma_db_streamlit"
@@ -346,8 +348,18 @@ if uploaded_files or os.path.exists(PERSIST_DIRECTORY):
 # 3. 初始化 LLM
 llm = None 
 if retriever is not None:
-    if not DASHSCOPE_API_KEY:
-        st.error("请配置 DASHSCOPE_API_KEY")
+    try:
+        st.info(f"正在初始化 LLM: {MODEL_ID} (SiliconFlow)...")
+        llm = ChatOpenAI(
+            model_name=MODEL_ID,
+            openai_api_key=SILICONFLOW_API_KEY,  # 使用硅基流动的 Key
+            openai_api_base=SILICONFLOW_API_BASE, # 使用硅基流动的地址
+            temperature=0.1, # Qwen 2.5 推荐温度稍低一点以保持准确性
+            max_tokens=1024,
+        )
+        st.success("LLM 初始化成功。")
+    except Exception as e:
+        st.error(f"初始化 LLM 失败: {e}")
         st.stop()
         
     try:
@@ -491,4 +503,5 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
