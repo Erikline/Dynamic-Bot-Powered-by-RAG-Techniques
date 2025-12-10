@@ -1,4 +1,7 @@
 # 导入所需的库
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import os
 import json
 import re
@@ -60,8 +63,11 @@ VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
 MODEL_ID = "doubao-1-5-lite-32k-250115"
 
 # --- 持久化配置 ---
-PERSIST_DIRECTORY = "data/chroma_db_streamlit"
-PERSIST_STATE_FILE = os.path.join("data", "processed_files_state.json")
+# 获取当前脚本所在的绝对路径
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# 拼接出绝对路径，确保一定能找到
+PERSIST_DIRECTORY = os.path.join(BASE_DIR, "data", "chroma_db_streamlit")
+PERSIST_STATE_FILE = os.path.join(BASE_DIR, "data", "processed_files_state.json")
 
 # --- 应用设置 ---
 APP_TITLE = f"使用 Deepseek-R1 和 基于 BGE 词嵌入 的 ChromaDB 的 RAG 应用 (支持持久化与文件同步)"
@@ -504,6 +510,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
