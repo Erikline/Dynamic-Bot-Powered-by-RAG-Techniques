@@ -27,13 +27,13 @@ warnings.filterwarnings(
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from langchain_huggingface import HuggingFaceEmbeddings # Embeddings 保持不变
-from langchain.callbacks.base import BaseCallbackHandler
 from langchain_community.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.documents import Document
+from langchain_core.callbacks import BaseCallbackHandler
 
 # 导入 DashScope (OpenAI兼容模式) 所需的组件
 try:
@@ -558,3 +558,4 @@ about.write(f"""
 
     **注意:** 持久化数据保存在 `{PERSIST_DIRECTORY}` 目录中。请确保此目录已被添加到 `.gitignore` 文件，以避免将大量数据提交到版本控制。
 """)
+
