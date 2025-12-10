@@ -52,12 +52,12 @@ warnings.filterwarnings(
 # DashScope (百炼) API 配置
 DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
 DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
-SILICONFLOW_API_KEY = "sk-gptbjpmnxghdepegyvaowaoapmmokwtsucmqtmijzumqqaqc"
+VOLC_API_KEY = os.getenv("VOLC_API_KEY")
+VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
 
 # --- 模型配置 ---
 # MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
-MODEL_ID = "Qwen/Qwen2.5-7B-Instruct" 
+MODEL_ID = "doubao-1-5-lite-32k-250115"
 
 # --- 持久化配置 ---
 PERSIST_DIRECTORY = "data/chroma_db_streamlit"
@@ -350,13 +350,13 @@ if uploaded_files or os.path.exists(PERSIST_DIRECTORY):
 llm = None 
 if retriever is not None:
     try:
-        st.info(f"正在初始化 LLM: {MODEL_ID} (SiliconFlow)...")
+        st.info(f"正在初始化 LLM: {MODEL_ID} (火山引擎-豆包)...")
         llm = ChatOpenAI(
             model_name=MODEL_ID,
-            openai_api_key=SILICONFLOW_API_KEY,  # 使用硅基流动的 Key
-            openai_api_base=SILICONFLOW_API_BASE, # 使用硅基流动的地址
-            temperature=0.1, # Qwen 2.5 推荐温度稍低一点以保持准确性
-            max_tokens=1024,
+            openai_api_key=VOLC_API_KEY,   # 使用火山引擎 Key
+            openai_api_base=VOLC_API_BASE, # 使用火山引擎 Base URL
+            temperature=0.1,               # 豆包通常不需要太高的温度
+            max_tokens=4096,               # 豆包支持较大的上下文
         )
         st.success("LLM 初始化成功。")
     except Exception as e:
@@ -504,6 +504,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
