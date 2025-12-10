@@ -1,21 +1,19 @@
-# --- Web 界面 ---
-streamlit>=1.35.0
+# 核心主包（RetrievalQA 就在这里，必须是这个版本以上）
+langchain==0.3.7
 
-# --- LangChain 核心组件 (必须全部安装) ---
-# 注意：'langchain' 包包含 Chains 和 RetrievalQA，缺它就会报错
-langchain>=0.3.0
-langchain-core>=0.3.0
-langchain-community>=0.3.0
-langchain-text-splitters>=0.3.0
+# 配套组件（必须版本严格匹配，否则又会报 No module）
+langchain-community==0.3.7
+langchain-core==0.3.19
+langchain-text-splitters==0.3.2
 
-# --- LangChain 专用集成包 (新版标准) ---
-langchain-openai>=0.2.0       # 用于连接 DashScope/DeepSeek
-langchain-chroma>=0.1.4       # 用于 ChromaDB 向量库
-langchain-huggingface>=0.1.0  # 用于 HuggingFace Embeddings
+# 你的业务包
+langchain-openai==0.2.6
+langchain-chroma==0.1.4
+langchain-huggingface==0.1.2
 
-# --- 底层依赖库 ---
-chromadb>=0.5.5               # 向量数据库引擎
-pypdf>=5.0.0                  # PDF 解析
-python-dotenv>=1.0.0          # 环境变量加载
-torch>=2.0.0                  # PyTorch (用于运行 Embedding 模型)
-tiktoken>=0.7.0               # Token 计算 (OpenAI 协议通常需要)
+# 基础库
+chromadb>=0.5.0
+pypdf>=5.0.0
+python-dotenv
+torch
+streamlit
