@@ -34,8 +34,9 @@ from langchain_core.documents import Document
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.chains import create_retrieval_chain
+from langchain_core.runnables import RunnablePassthrough
+from langchain.chains.retrieval import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-
 # 导入 DashScope (OpenAI兼容模式) 所需的组件
 try:
     from langchain_openai import ChatOpenAI # <--- 使用 LangChain 的 OpenAI 包装器
@@ -560,6 +561,7 @@ about.write(f"""
 
     **注意:** 持久化数据保存在 `{PERSIST_DIRECTORY}` 目录中。请确保此目录已被添加到 `.gitignore` 文件，以避免将大量数据提交到版本控制。
 """)
+
 
 
 
