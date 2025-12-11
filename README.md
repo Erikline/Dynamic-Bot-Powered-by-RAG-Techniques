@@ -102,7 +102,7 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   ChromaDB ([https://github.com/chroma-core/chroma](https://github.com/chroma-core/chroma))
 *   Hugging Face Transformers ([https://github.com/huggingface/transformers](https://github.com/huggingface/transformers)) & Embeddings ([https://huggingface.co/BAAI/bge-large-zh-v1.5](https://huggingface.co/BAAI/bge-large-zh-v1.5))
 *   阿里云 DashScope ([https://www.aliyun.com/product/bailian](https://www.aliyun.com/product/bailian)) & Deepseek-R1 Model
-
+*   硅基流动 Siliconflow ([https://www.aliyun.com/product/bailian](https://cloud.siliconflow.cn/me/models))& THUDM/GLM-4-9B-0414 Model
 ## 📄 许可证 (License)
 
 本项目根据 **[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)** 条款进行许可。
@@ -113,5 +113,5 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 *   有关完整的权限和限制信息，请参阅项目根目录下的 [`LICENSE`](./LICENSE) 文件。
 
 ## ✨ 即时体验
-* 欢迎访问该链接进行 RAG Bot 体验！详情访问（因费用问题，已换成Qwen2.5-VL-72B-Instruct模型）：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
+* 欢迎访问该链接进行 RAG Bot 体验！详情访问（因费用问题，已换成免费的THUDM/GLM-4-9B-0414模型）：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
 *  ![Alt text](https://raw.githubusercontent.com/Erikline/Dynamic-Bot-Powered-by-RAG-Techniques/main/Streamlit%20Web.png)
