@@ -2,6 +2,7 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import os
 import json
 import re
@@ -15,7 +16,6 @@ import torch
 import shutil
 import hashlib
 
-# --- 核心修复：新版 LangChain 导入映射 ---
 try:
     # 1. 基础组件
     from langchain_community.document_loaders import PyPDFLoader
@@ -27,14 +27,14 @@ try:
     from langchain_core.documents import Document
     from langchain.chains.retrieval_qa.base import RetrievalQA
     
-    # 3. 这里的导入是修复的关键：使用独立包
+    # 3. 使用独立包
     # 以前是 langchain_community.vectorstores.chroma
     from langchain_chroma import Chroma 
     
     # 以前是 langchain_community.embeddings
     from langchain_huggingface import HuggingFaceEmbeddings
     
-    # 以前是 langchain_openai 或 langchain.chat_models
+    # 以前是 langchain.chat_models
     from langchain_openai import ChatOpenAI
 
 except ImportError as e:
@@ -500,6 +500,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
