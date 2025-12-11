@@ -338,7 +338,7 @@ if retriever is not None:
             # 额外参数 (对应 curl 中的 top_p, top_k, frequency_penalty 等)
             model_kwargs={
                 "top_p": 0.7,
-                "top_k": 50,
+                # "top_k": 50,
                 "frequency_penalty": 0.5,
                 # "min_p": 0.05, # LangChain 部分版本可能不支持传这个，如果报错请注释掉
             }
@@ -476,6 +476,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
