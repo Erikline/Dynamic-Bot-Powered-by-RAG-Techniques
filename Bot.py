@@ -16,24 +16,6 @@ import torch
 import shutil
 import hashlib
 
-# ==========================================
-# 🚨 紧急修复：启动时强制清理旧数据 🚨
-# ==========================================
-# 获取当前脚本目录
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# 定义数据目录路径
-DATA_PATH = os.path.join(BASE_DIR, "data")
-
-# 检查是否存在，如果存在直接删除
-if os.path.exists(DATA_PATH):
-    print(f"⚠️ 检测到旧数据目录 {DATA_PATH}，正在强制删除...")
-    try:
-        shutil.rmtree(DATA_PATH)
-        print("✅ 旧数据目录已清除！")
-    except Exception as e:
-        print(f"❌ 删除失败: {e}")
-# ==========================================
-
 try:
     # 1. 基础组件
     from langchain_community.document_loaders import PyPDFLoader
@@ -518,6 +500,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
