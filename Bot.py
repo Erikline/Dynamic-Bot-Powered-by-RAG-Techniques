@@ -33,7 +33,7 @@ SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY")
 SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
 
 # --- 模型配置 ---
-MODEL_ID = "Qwen/Qwen2.5-VL-72B-Instruct"
+MODEL_ID = "THUDM/GLM-4-9B-0414"
 
 # --- 持久化配置 ---
 # 获取当前脚本所在的绝对路径
@@ -476,6 +476,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
