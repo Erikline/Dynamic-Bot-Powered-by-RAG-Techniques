@@ -115,4 +115,4 @@ streamlit run your_script_name.py # 将 your_script_name.py 替换为你的 Pyth
 ## ✨ 即时体验
 * 欢迎访问该链接进行 RAG Bot 体验！详情访问：[Dynamic Bot Powered by RAG Techniques](https://dynamic-bot-powered-by-rag-techniques.streamlit.app/)
 *  ![Alt text](https://raw.githubusercontent.com/Erikline/Dynamic-Bot-Powered-by-RAG-Techniques/main/Streamlit%20Web.png)
-*  因费用问题，已换成免费的THUDM/GLM-4-9B-0414模型。缺点是：无法调整Top-k参数。
+*  因费用问题，已换成免费的THUDM/GLM-4-9B-0414模型。缺点是：无法调整Top-k参数，进而导致检索内容较少，容易不全面。自行使用时，建议选用可自定义Top-K个数的LLM。
