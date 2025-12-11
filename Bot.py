@@ -1,8 +1,3 @@
-# 导入所需的库
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
 import os
 import json
 import re
@@ -16,6 +11,10 @@ import torch
 import shutil
 import hashlib
 
+# 导入所需的库
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 try:
     # 1. 基础组件
     from langchain_community.document_loaders import PyPDFLoader
@@ -500,6 +499,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
