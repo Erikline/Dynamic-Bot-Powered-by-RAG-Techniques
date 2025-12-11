@@ -52,12 +52,11 @@ warnings.filterwarnings(
 )
 
 # --- 配置 ---
-VOLC_API_KEY = os.getenv("VOLC_API_KEY")
-VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
+SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY")
+SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
 
 # --- 模型配置 ---
-# MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
-MODEL_ID = "doubao-1-5-lite-32k-250115"
+MODEL_ID = "Qwen/Qwen2.5-VL-72B-Instruct"
 
 # --- 持久化配置 ---
 # 获取当前脚本所在的绝对路径
@@ -348,15 +347,27 @@ if uploaded_files or os.path.exists(PERSIST_DIRECTORY):
 llm = None 
 if retriever is not None:
     try:
-        st.info(f"正在初始化 LLM: {MODEL_ID} (火山引擎-豆包)...")
+        st.info(f"正在初始化 LLM: {MODEL_ID} (SiliconFlow)...")
+        
+        # 根据你的 curl 命令配置参数
         llm = ChatOpenAI(
             model_name=MODEL_ID,
-            openai_api_key=VOLC_API_KEY,   # 使用火山引擎 Key
-            openai_api_base=VOLC_API_BASE, # 使用火山引擎 Base URL
-            temperature=0.1,               # 豆包通常不需要太高的温度
-            max_tokens=4096,               # 豆包支持较大的上下文
+            openai_api_key=SILICONFLOW_API_KEY,
+            openai_api_base=SILICONFLOW_API_BASE,
+            
+            # 标准参数
+            temperature=0.7,        # curl 中的设置
+            max_tokens=4096,        # curl 中的设置
+            
+            # 额外参数 (对应 curl 中的 top_p, top_k, frequency_penalty 等)
+            model_kwargs={
+                "top_p": 0.7,
+                "top_k": 50,
+                "frequency_penalty": 0.5,
+                # "min_p": 0.05, # LangChain 部分版本可能不支持传这个，如果报错请注释掉
+            }
         )
-        st.success("LLM 初始化成功。")
+        st.success(f"LLM ({MODEL_ID}) 初始化成功。")
     except Exception as e:
         st.error(f"初始化 LLM 失败: {e}")
         st.stop()
@@ -489,6 +500,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
