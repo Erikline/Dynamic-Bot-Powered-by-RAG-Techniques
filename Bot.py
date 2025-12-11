@@ -1,13 +1,7 @@
-import sys
-# 这是一个非常激进的检查，确保 sqlite3 还没有被加载
-if 'sqlite3' in sys.modules:
-    print("Warning: sqlite3 was already loaded before patching!")
-    # 尝试强行卸载
-    del sys.modules['sqlite3']
-
+# 导入所需的库
 __import__('pysqlite3')
+import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
 import os
 import json
 import re
@@ -21,6 +15,7 @@ import torch
 import shutil
 import hashlib
 
+# --- 核心修复：新版 LangChain 导入映射 ---
 try:
     # 1. 基础组件
     from langchain_community.document_loaders import PyPDFLoader
@@ -32,14 +27,14 @@ try:
     from langchain_core.documents import Document
     from langchain.chains.retrieval_qa.base import RetrievalQA
     
-    # 3. 使用独立包
+    # 3. 这里的导入是修复的关键：使用独立包
     # 以前是 langchain_community.vectorstores.chroma
     from langchain_chroma import Chroma 
     
     # 以前是 langchain_community.embeddings
     from langchain_huggingface import HuggingFaceEmbeddings
     
-    # 以前是 langchain.chat_models
+    # 以前是 langchain_openai 或 langchain.chat_models
     from langchain_openai import ChatOpenAI
 
 except ImportError as e:
@@ -57,11 +52,15 @@ warnings.filterwarnings(
 )
 
 # --- 配置 ---
-SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY")
-SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
+# DashScope (百炼) API 配置
+DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
+DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+VOLC_API_KEY = os.getenv("VOLC_API_KEY")
+VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
 
 # --- 模型配置 ---
-MODEL_ID = "Qwen/Qwen2.5-VL-72B-Instruct"
+# MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
+MODEL_ID = "doubao-1-5-lite-32k-250115"
 
 # --- 持久化配置 ---
 # 获取当前脚本所在的绝对路径
@@ -100,6 +99,11 @@ except Exception as e:
 
 with st.sidebar:
     st.markdown(f"**{APP_TITLE}**")
+    
+    # 检查 API Key
+    if not DASHSCOPE_API_KEY:
+        st.error("⚠️ 未设置 DASHSCOPE_API_KEY")
+        st.info("请设置环境变量或在代码中填入 Key")
     
     st.divider()
 
@@ -352,27 +356,28 @@ if uploaded_files or os.path.exists(PERSIST_DIRECTORY):
 llm = None 
 if retriever is not None:
     try:
-        st.info(f"正在初始化 LLM: {MODEL_ID} (SiliconFlow)...")
-        
-        # 根据你的 curl 命令配置参数
+        st.info(f"正在初始化 LLM: {MODEL_ID} (火山引擎-豆包)...")
         llm = ChatOpenAI(
             model_name=MODEL_ID,
-            openai_api_key=SILICONFLOW_API_KEY,
-            openai_api_base=SILICONFLOW_API_BASE,
-            
-            # 标准参数
-            temperature=0.7,        # curl 中的设置
-            max_tokens=4096,        # curl 中的设置
-            
-            # 额外参数 (对应 curl 中的 top_p, top_k, frequency_penalty 等)
-            model_kwargs={
-                "top_p": 0.7,
-                "top_k": 50,
-                "frequency_penalty": 0.5,
-                # "min_p": 0.05, # LangChain 部分版本可能不支持传这个，如果报错请注释掉
-            }
+            openai_api_key=VOLC_API_KEY,   # 使用火山引擎 Key
+            openai_api_base=VOLC_API_BASE, # 使用火山引擎 Base URL
+            temperature=0.1,               # 豆包通常不需要太高的温度
+            max_tokens=4096,               # 豆包支持较大的上下文
         )
-        st.success(f"LLM ({MODEL_ID}) 初始化成功。")
+        st.success("LLM 初始化成功。")
+    except Exception as e:
+        st.error(f"初始化 LLM 失败: {e}")
+        st.stop()
+        
+    try:
+        # st.info(f"正在初始化 DashScope LLM: {MODEL_ID}...")
+        llm = ChatOpenAI(
+            model_name=MODEL_ID,
+            openai_api_key=DASHSCOPE_API_KEY,
+            openai_api_base=DASHSCOPE_API_BASE,
+            temperature=0.5,
+            max_tokens=1024,
+        )
     except Exception as e:
         st.error(f"初始化 LLM 失败: {e}")
         st.stop()
@@ -505,15 +510,6 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
-
-
-
-
-
-
-
-
-
 
 
 
