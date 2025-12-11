@@ -1,6 +1,11 @@
-# 导入所需的库
-__import__('pysqlite3')
 import sys
+# 这是一个非常激进的检查，确保 sqlite3 还没有被加载
+if 'sqlite3' in sys.modules:
+    print("Warning: sqlite3 was already loaded before patching!")
+    # 尝试强行卸载
+    del sys.modules['sqlite3']
+
+__import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import os
@@ -500,6 +505,7 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
 
 
 
