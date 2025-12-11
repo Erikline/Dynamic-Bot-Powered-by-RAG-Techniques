@@ -1,7 +1,7 @@
-# 导入所需的库
-__import__('pysqlite3')
 import sys
+__import__('pysqlite3')
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import os
 import json
 import re
@@ -15,58 +15,30 @@ import torch
 import shutil
 import hashlib
 
-# --- 核心修复：新版 LangChain 导入映射 ---
-try:
-    # 1. 基础组件
-    from langchain_community.document_loaders import PyPDFLoader
-    from langchain_text_splitters import RecursiveCharacterTextSplitter
-    from langchain_community.chat_message_histories import StreamlitChatMessageHistory
-    
-    # 2. 核心对象
-    from langchain_core.prompts import PromptTemplate
-    from langchain_core.documents import Document
-    from langchain.chains.retrieval_qa.base import RetrievalQA
-    
-    # 3. 这里的导入是修复的关键：使用独立包
-    # 以前是 langchain_community.vectorstores.chroma
-    from langchain_chroma import Chroma 
-    
-    # 以前是 langchain_community.embeddings
-    from langchain_huggingface import HuggingFaceEmbeddings
-    
-    # 以前是 langchain_openai 或 langchain.chat_models
-    from langchain_openai import ChatOpenAI
 
-except ImportError as e:
-    st.error(f"环境配置错误：缺少必要的库。\n请确保运行了: pip install langchain-chroma langchain-huggingface langchain-openai langchain-community chromadb\n具体错误: {e}")
-    st.stop()
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
+from langchain_core.prompts import PromptTemplate
+from langchain_core.documents import Document
+from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain_chroma import Chroma 
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import ChatOpenAI
 
-# 加载环境变量
 load_dotenv()
 
-# 忽略特定的 Streamlit 弃用警告
-warnings.filterwarnings(
-    "ignore",
-    category=DeprecationWarning,
-    message=".*use_column_width parameter has been deprecated.*"
-)
-
 # --- 配置 ---
-# DashScope (百炼) API 配置
-DASHSCOPE_API_KEY = os.getenv("DASHSCOPE_API_KEY") # 从环境变量获取
-DASHSCOPE_API_BASE = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-VOLC_API_KEY = os.getenv("VOLC_API_KEY")
-VOLC_API_BASE = "https://ark.cn-beijing.volces.com/api/v3"
+SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY")
+SILICONFLOW_API_BASE = "https://api.siliconflow.cn/v1"
 
 # --- 模型配置 ---
-# MODEL_ID = "deepseek-r1" # 使用 DashScope 的模型名称
-MODEL_ID = "doubao-1-5-lite-32k-250115"
+MODEL_ID = "Qwen/Qwen2.5-VL-72B-Instruct"
 
 # --- 持久化配置 ---
 # 获取当前脚本所在的绝对路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# 拼接出绝对路径，确保一定能找到
-PERSIST_DIRECTORY = os.path.join(BASE_DIR, "data", "chroma_db_streamlit")
+PERSIST_DIRECTORY = os.path.join(BASE_DIR, "data", "chroma_db")
 PERSIST_STATE_FILE = os.path.join(BASE_DIR, "data", "processed_files_state.json")
 
 # --- 应用设置 ---
@@ -99,11 +71,6 @@ except Exception as e:
 
 with st.sidebar:
     st.markdown(f"**{APP_TITLE}**")
-    
-    # 检查 API Key
-    if not DASHSCOPE_API_KEY:
-        st.error("⚠️ 未设置 DASHSCOPE_API_KEY")
-        st.info("请设置环境变量或在代码中填入 Key")
     
     st.divider()
 
@@ -356,28 +323,27 @@ if uploaded_files or os.path.exists(PERSIST_DIRECTORY):
 llm = None 
 if retriever is not None:
     try:
-        st.info(f"正在初始化 LLM: {MODEL_ID} (火山引擎-豆包)...")
-        llm = ChatOpenAI(
-            model_name=MODEL_ID,
-            openai_api_key=VOLC_API_KEY,   # 使用火山引擎 Key
-            openai_api_base=VOLC_API_BASE, # 使用火山引擎 Base URL
-            temperature=0.1,               # 豆包通常不需要太高的温度
-            max_tokens=4096,               # 豆包支持较大的上下文
-        )
-        st.success("LLM 初始化成功。")
-    except Exception as e:
-        st.error(f"初始化 LLM 失败: {e}")
-        st.stop()
+        st.info(f"正在初始化 LLM: {MODEL_ID} (SiliconFlow)...")
         
-    try:
-        # st.info(f"正在初始化 DashScope LLM: {MODEL_ID}...")
+        # 根据你的 curl 命令配置参数
         llm = ChatOpenAI(
             model_name=MODEL_ID,
-            openai_api_key=DASHSCOPE_API_KEY,
-            openai_api_base=DASHSCOPE_API_BASE,
-            temperature=0.5,
-            max_tokens=1024,
+            openai_api_key=SILICONFLOW_API_KEY,
+            openai_api_base=SILICONFLOW_API_BASE,
+            
+            # 标准参数
+            temperature=0.7,        # curl 中的设置
+            max_tokens=4096,        # curl 中的设置
+            
+            # 额外参数 (对应 curl 中的 top_p, top_k, frequency_penalty 等)
+            model_kwargs={
+                "top_p": 0.7,
+                "top_k": 50,
+                "frequency_penalty": 0.5,
+                # "min_p": 0.05, # LangChain 部分版本可能不支持传这个，如果报错请注释掉
+            }
         )
+        st.success(f"LLM ({MODEL_ID}) 初始化成功。")
     except Exception as e:
         st.error(f"初始化 LLM 失败: {e}")
         st.stop()
@@ -510,6 +476,14 @@ with st.sidebar:
     **功能:**
     文件内容会自动持久化保存。下次打开无需重新上传，除非文件发生变动。
     """)
+
+
+
+
+
+
+
+
 
 
 
